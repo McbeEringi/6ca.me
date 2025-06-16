@@ -1,4 +1,4 @@
 {
 	"version":1,
-	"exclude":["index.html"]
+	"exclude":["/index.html"]
 }
