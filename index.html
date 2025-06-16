@@ -33,6 +33,6 @@
 		<pre id="log"></pre>
 	</div>
 	<script>
-		(async()=>log.textContent=JSON.stringify(await fetch('https://6ca.me/links').json(),0,'\t'))();
+		(async()=>log.textContent=JSON.stringify(await(await fetch('https://6ca.me/links')).json(),0,'\t'))();
 	</script>
 </body></html>
