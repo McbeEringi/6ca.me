@@ -26,7 +26,7 @@
 	.zab::before{
 		content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
 		background-color:var(--fg);
-		filter:blur(8px)opacity(.2);
+		filter:blur(4px)opacity(.2);
 		border-radius:32px;
 	}
 	pre{overflow:auto;}
@@ -44,7 +44,7 @@
 	<script>
 		(async()=>(
 			links.innerHTML=Object.entries(await(await fetch('https://6ca.me/links')).json()).map(([i,x])=>(
-				`<div class="zab"><h3><a href="${x.Location}">${x.description}</a></h3><p>${x.Location}<br>${new URL(location.href).origin}/${i}</div></a>`
+				`<div class="zab"><h3><a href="${i}">${x.description}</a></h3><p>${x.Location}<br>${new URL(location.href).origin}/${i}</div></a>`
 			)).join('')
 		))();
 	</script>
