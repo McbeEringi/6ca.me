@@ -22,17 +22,30 @@
 		border-radius:64px;
 	}
 	hr{box-sizing:border-box;border:4px solid var(--fg);border-radius:8px;filter:blur(2px)opacity(.2);}
+	.zab{box-sizing:border-box;padding:16px;position:relative;display:block;}
+	.zab::before{
+		content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
+		background-color:var(--fg);
+		filter:blur(8px)opacity(.2);
+		border-radius:32px;
+	}
+	pre{overflow:auto;}
 	</style>
 	<a class="icon" href="https://mcbeeringi.dev/">
 		<img src="https://mcbeeringi.dev/img/icon+_.svg">
 	</a>
 	<div class="root">
 		<h1>6ca.me</h1>
-		<p>Shorten URL of <a href="https://mcbeeringi.dev">mcbeeringi.dev</a></p>
+		<p>URL shortener by <a href="https://mcbeeringi.dev">@McbeEringi</a></p>
 		<hr>
-		<pre id="log"></pre>
+		<h2>Links</h2>
+		<div id="links"></div>
 	</div>
 	<script>
-		(async()=>log.textContent=JSON.stringify(await(await fetch('https://6ca.me/links')).json(),0,'\t'))();
+		(async()=>(
+			links.innerHTML=Object.entries(await(await fetch('https://6ca.me/links')).json()).map(([i,x])=>(
+				`<div class="zab"><h3><a href="${x.Location}">${x.description}</a></h3><p>${x.Location}<br>${new URL(location.href).origin}/${i}</div></a>`
+			)).join('')
+		))();
 	</script>
 </body></html>
