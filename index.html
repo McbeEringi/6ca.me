@@ -44,7 +44,7 @@
 	<script>
 		(async()=>(
 			links.innerHTML=Object.entries(await(await fetch('https://6ca.me/links')).json()).map(([i,x])=>(
-				`<div class="zab"><h3><a href="${i}">${x.description}</a></h3><p>${x.Location}<br>${new URL(location.href).origin}/${i}</div></a>`
+				`<div class="zab"><h3><a href="${i}">${x.description}</a></h3><p>${x.Location}</div></a>`
 			)).join('')
 		))();
 	</script>
