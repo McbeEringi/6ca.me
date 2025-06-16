@@ -12,7 +12,7 @@ links={
 onRequest=ctx=>new Response(...({
 	links:_=>[JSON.stringify(links),{headers:{'Content-Type':'application/json'}}]
 }[ctx.params.name]||(i=>(
-	links[i]?[null,{status:301,headers:links[i]}]:
+	links[i]?[null,{status:302,headers:links[i]}]:
 	[`Hello, ${i}!`]
 )))(ctx.params.name));
 
