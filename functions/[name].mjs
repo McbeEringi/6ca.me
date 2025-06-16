@@ -1,4 +1,3 @@
-import{links}from'../links.mjs';
 const
 rand=_=>(w=>(
 	w=[...w(10,0x30),...w(26,0x41),...w(26,0x61),...'-_'],
@@ -13,7 +12,7 @@ links={
 onRequest=ctx=>({
 	links:_=>new Response(JSON.stringify(links),{headers:{'Content-Type':'application/json'}})
 }[ctx.params.name]||(i=>(
-	links[i]?new Response(null,{status:302,headers:links[i]}):fetch(ctx.request)
+	links[i]?new Response(null,{status:302,headers:links[i]}):ctx.next()
 )))(ctx.params.name);
 
 export{onRequest};
