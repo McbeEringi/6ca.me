@@ -1,4 +1,3 @@
-import{links}from'../links.mjs';
 const
 rand=_=>(w=>(
 	w=[...w(10,0x30),...w(26,0x41),...w(26,0x61),...'-_'],
@@ -9,11 +8,6 @@ links={
 	// chars from base64url [A-Za-z0-9\-_]
 	// use rand()
 	'_1dKisX0qg':{description:'test',Location:'https://github.com/mcbeeringi'}
-},
-onRequest=ctx=>({
-	links:_=>new Response(JSON.stringify(links),{headers:{'Content-Type':'application/json'}})
-}[ctx.params.name]||(i=>(
-	links[i]?new Response(null,{status:302,headers:links[i]}):fetch(ctx.request)
-)))(ctx.params.name);
+};
 
-export{onRequest};
+export{rand,links};
