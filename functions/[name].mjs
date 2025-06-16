@@ -7,12 +7,12 @@ links={
 	// QRCode v1: 10 chars
 	// chars from base64url [A-Za-z0-9\-_]
 	// use rand()
-	'_1dKisX0qg':{desc:'test',href:'https://github.com/mcbeeringi'}
+	'_1dKisX0qg':{description:'test',Location:'https://github.com/mcbeeringi'}
 },
 onRequest=ctx=>new Response(...({
 	links:_=>[JSON.stringify(links),{headers:{'Content-Type':'application/json'}}]
 }[ctx.params.name]||(i=>(
-	links[i]?[JSON.stringify(links[i]),{status:301,headers:{Location:links[i].href}}]:
+	links[i]?[null,{status:301,headers:links[i]}]:
 	[`Hello, ${i}!`]
 )))(ctx.params.name));
 
