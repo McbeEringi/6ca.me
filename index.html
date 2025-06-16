@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>6ca.me</title>
+</head><body>
+	<style>
+	:root{--fg:#223;--bg:#eed;color:var(--fg);background-color:var(--bg);font-family:sans-serif;}
+	@media(prefers-color-scheme:dark){:root{--fg:#eed;--bg:#223;}a:not(.icon){filter:contrast(.5)brightness(2);}}
+	.icon>img{width:100%;height:100vh;display:block;object-fit:contain;transform:scale(.8);}
+
+	.root{margin:16px auto 64px;max-width:720px;box-sizing:border-box;padding:32px;position:relative;}
+	.root::before{
+		content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
+		background-color:var(--fg);
+		filter:blur(16px)opacity(.2);
+		border-radius:64px;
+	}
+	hr{box-sizing:border-box;border:4px solid var(--fg);border-radius:8px;filter:blur(2px)opacity(.2);}
+	</style>
+	<a class="icon" href="https://mcbeeringi.dev/">
+		<img src="https://mcbeeringi.dev/img/icon+_.svg">
+	</a>
+	<div class="root">
+		<h1>6ca.me</h1>
+		<p>Shorten URL of <a href="https://mcbeeringi.dev">mcbeeringi.dev</a></p>
+		<hr>
+	</div>
+</body></html>
