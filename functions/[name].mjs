@@ -12,8 +12,8 @@ links={
 onRequest=ctx=>new Response(...({
 	links:_=>[JSON.stringify(links),{headers:{'Content-Type':'application/json'}}]
 }[ctx.params.name]||(i=>(
-	links[i]?[JSON.stringify(links[i]),{status:301,headers:{Location:links[i].href}}]:
-	`Hello, ${ctx.params.name}!`
+	// links[i]?[JSON.stringify(links[i]),{status:301,headers:{Location:links[i].href}}]:
+	`Hello, ${i}!`
 )))(ctx.params.name));
 
 export{onRequest};
