@@ -5,7 +5,12 @@
 	<title>6ca.me</title>
 </head><body>
 	<style>
-	:root{--fg:#223;--bg:#eed;color:var(--fg);background-color:var(--bg);font-family:sans-serif;}
+	:root{
+		--fg:#223;--bg:#eed;
+		color:var(--fg);background-color:var(--bg);
+		font-family:sans-serif;
+		tab-size:2;
+	}
 	@media(prefers-color-scheme:dark){:root{--fg:#eed;--bg:#223;}a:not(.icon){filter:contrast(.5)brightness(2);}}
 	.icon>img{width:100%;height:100vh;display:block;object-fit:contain;transform:scale(.8);}
 
@@ -25,5 +30,9 @@
 		<h1>6ca.me</h1>
 		<p>Shorten URL of <a href="https://mcbeeringi.dev">mcbeeringi.dev</a></p>
 		<hr>
+		<pre id="log"></pre>
 	</div>
+	<script>
+		(async()=>log.textContent=JSON.stringify(await fetch('https://6ca.me/links').json(),0,'\t'))();
+	</script>
 </body></html>

@@ -2,7 +2,7 @@
 	"version":1,
 	"include":["/*"],
 	"exclude":[
-		"/","/index.html",
+		"/","/index","/index.html",
 		"/favicon.ico"
 	]
 }
