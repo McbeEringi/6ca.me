@@ -30,7 +30,7 @@
 		border-radius:64px;
 	}
 	hr{box-sizing:border-box;border:4px solid var(--fg);border-radius:8px;filter:blur(2px)opacity(.2);}
-	.zab{box-sizing:border-box;margin:16 0;padding:16px;position:relative;display:block;}
+	.zab{box-sizing:border-box;margin:16px 0;padding:16px;position:relative;display:block;}
 	.zab::before{
 		content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
 		background-color:var(--fg);
@@ -48,7 +48,7 @@
 		<p>McbeEringi Link Portal</p>
 		<hr>
 		<h2>Links</h2>
-		<div id="links"><progress></progress></div>
+		<div id="links"><div class="zab"><progress></progress></div></div>
 	</div>
 	<script>
 		(async()=>(
