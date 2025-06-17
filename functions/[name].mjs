@@ -7,6 +7,14 @@ links={
 	// QRCode v1: 10 chars
 	// chars from base64url [A-Za-z0-9\-_]
 	// use rand()
+	h:{description:'HomePage',Location:'https://mcbeeringi.dev/'},
+	x:{description:'X(Twitter)',Location:'https://x.com/McbeEringi'},
+	g:{description:'GitHub',Location:'https://github.com/mcbeeringi'},
+	m:{description:'misskey.io',Location:'https://misskey.io/@mcbeeringi'},
+	q:{description:'Qiita',Location:'https://qiita.com/mcbeeringi'},
+	
+	ghp:{description:'GitHub Pages',Location:'https://mcbeeringi.github.io/'},
+
 	'_1dKisX0qg':{description:'test',Location:'https://github.com/mcbeeringi'}
 },
 onRequest=ctx=>({
