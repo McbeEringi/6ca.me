@@ -3,6 +3,7 @@
 	"include":["/*"],
 	"exclude":[
 		"/","/index","/index.html",
+		"/style.css",
 		"/favicon.ico"
 	]
 }

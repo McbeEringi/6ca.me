@@ -15,7 +15,7 @@
 	.icon{display:block;}
 	.icon>img{width:100%;height:100vh;object-fit:contain;transform:scale(.8);}
 
-	.root{margin:16px auto 64px;max-width:720px;box-sizing:border-box;padding:32px;position:relative;}
+	.root{margin:16px auto 64px;max-width:960px;box-sizing:border-box;padding:32px;position:relative;}
 	.root::before{
 		content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
 		background-color:var(--fg);
@@ -23,14 +23,14 @@
 		border-radius:64px;
 	}
 	hr{box-sizing:border-box;border:4px solid var(--fg);border-radius:8px;filter:blur(2px)opacity(.2);will-change:filter;}
-	.zab{box-sizing:border-box;margin:16px 0;padding:16px;position:relative;display:block;}
-	.zab::before{
+	#links{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:16px;}
+	#links>*{padding:16px;position:relative;}
+	#links>*::before{
 		content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
 		background-color:var(--fg);
 		filter:blur(4px)opacity(.2);
 		border-radius:32px;
 	}
-	pre{overflow:auto;}
 	</style>
 	<picture class="icon">
 		<source srcset="https://mcbeeringi.dev/img/icon.svg#!_" media="(prefers-color-scheme:dark)">
@@ -39,17 +39,15 @@
 	<div class="root">
 		<h1>6ca.me</h1>
 		<p>
-		McbeEringi Link Portal<br>
+			McbeEringi Link Portal<br>
 			hex color code <span style="color:#6ca;font-weight:bolder;">#66ccaa</span> from icon
 		</p>
-		<hr>
-		<h2>Links</h2>
-		<div id="links"><div class="zab"><progress></progress></div></div>
+		<div id="links"><div><progress></progress></div></div>
 	</div>
 	<script>
 		(async()=>(
 			links.innerHTML=Object.entries(await(await fetch('https://6ca.me/links')).json()).map(([i,x])=>(
-				`<div class="zab"><h3><a href="${i}">${x.description}</a></h3><p>${x.Location}</div></a>`
+				`<div><h3><a href="${i}">${x.description}</a></h3><p>${x.Location}</div></a>`
 			)).join('')
 		))();
 	</script>
