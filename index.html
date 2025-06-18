@@ -22,7 +22,7 @@
 		filter:blur(16px)opacity(.2);
 		border-radius:64px;
 	}
-	hr{box-sizing:border-box;border:4px solid var(--fg);border-radius:8px;filter:blur(2px)opacity(.2);}
+	hr{box-sizing:border-box;border:4px solid var(--fg);border-radius:8px;filter:blur(2px)opacity(.2);will-change:filter;}
 	.zab{box-sizing:border-box;margin:16px 0;padding:16px;position:relative;display:block;}
 	.zab::before{
 		content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
@@ -33,12 +33,15 @@
 	pre{overflow:auto;}
 	</style>
 	<picture class="icon">
-		<source srcset="https://mcbeeringi.dev/img/icon.svg#!_" media="(prefers-color-scheme:dark)" />
+		<source srcset="https://mcbeeringi.dev/img/icon.svg#!_" media="(prefers-color-scheme:dark)">
 		<img src="https://mcbeeringi.dev/img/icon.svg#_">
 	</picture>
 	<div class="root">
 		<h1>6ca.me</h1>
-		<p>McbeEringi Link Portal</p>
+		<p>
+		McbeEringi Link Portal<br>
+			hex color code <span style="color:#6ca;font-weight:bolder;">#66ccaa</span> from icon
+		</p>
 		<hr>
 		<h2>Links</h2>
 		<div id="links"><div class="zab"><progress></progress></div></div>

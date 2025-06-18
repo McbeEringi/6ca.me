@@ -18,7 +18,7 @@ links={
 	'_1dKisX0qg':{description:'test',Location:'https://github.com/mcbeeringi'}
 },
 onRequest=ctx=>({
-	links:_=>new Response(JSON.stringify(links),{headers:{'Content-Type':'application/json'}})
+	links:_=>new Response(JSON.stringify(links),{headers:{'Content-Type':'application/json','Access-Control-Allow-Origin':'*'}})
 }[ctx.params.name]||(i=>(
 	links[i]?new Response(null,{status:301,headers:links[i]}):ctx.next()
 )))(ctx.params.name);
