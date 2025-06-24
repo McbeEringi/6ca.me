@@ -23,4 +23,4 @@ onRequest=ctx=>({
 	links[i]?new Response(null,{status:301,headers:links[i]}):ctx.next()
 )))(ctx.params.name);
 
-export{onRequest};
+export default{fetch:onRequest};
