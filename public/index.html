@@ -46,7 +46,7 @@
 	</div>
 	<script>
 		(async()=>(
-			links.innerHTML=Object.entries(await(await fetch('https://6ca.me/links')).json()).map(([i,x])=>(
+			links.innerHTML=Object.entries(await(await fetch('links')).json()).map(([i,x])=>(
 				`<div><h3><a href="${i}">${x.description}</a></h3><p>${x.Location}</div></a>`
 			)).join('')
 		))();

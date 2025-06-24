@@ -20,11 +20,11 @@ links={
 
 export default{
 	fetch:req=>(
-		req.url=new URL(req.url),
+		req.u=new URL(req.url),console.log(req.u),
 		({
 			links:_=>new Response(JSON.stringify(links),{headers:{'Content-Type':'application/json','Access-Control-Allow-Origin':'*'}})
-		}[req.url.pathname]||(i=>(
+		}[req.u.pathname.slice(1)]||(i=>(
 			links[i]?new Response(null,{status:301,headers:links[i]}):new Response(null,{status:404})
-		)))(req.url.pathname)
+		)))(req.u.pathname.slice(1))
 	)
 };
