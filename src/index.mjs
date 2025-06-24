@@ -7,6 +7,7 @@ links={
 	// QRCode v1: 10 chars
 	// chars from base64url [A-Za-z0-9\-_]
 	// use rand()
+	links:_=>new Response(JSON.stringify(links),{headers:{'Content-Type':'application/json','Access-Control-Allow-Origin':'*'}}),
 	ghp:{description:'GitHub Pages',Location:'https://mcbeeringi.github.io/'},
 
 	h:{description:'HomePage',Location:'https://mcbeeringi.dev/'},
@@ -19,12 +20,7 @@ links={
 };
 
 export default{
-	fetch:req=>(
-		req.u=new URL(req.url),console.log(req.u),
-		({
-			links:_=>new Response(JSON.stringify(links),{headers:{'Content-Type':'application/json','Access-Control-Allow-Origin':'*'}})
-		}[req.u.pathname.slice(1)]||(i=>(
-			links[i]?new Response(null,{status:301,headers:links[i]}):new Response(null,{status:404})
-		)))(req.u.pathname.slice(1))
-	)
+	fetch:req=>(x=>(
+		x?typeof x=='function'?x():new Response(null,{status:301,headers:x}):new Response(null,{status:404})
+	))(links[new URL(req.url).pathname.slice(1)])
 };
