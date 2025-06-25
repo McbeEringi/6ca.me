@@ -46,8 +46,10 @@
 	</div>
 	<script>
 		(async()=>(
-			links.innerHTML=Object.entries(await(await fetch('links')).json()).map(([i,x])=>(
-				`<div><h3><a href="${i}">${x.description}</a></h3><p>${x.Location}</div></a>`
+			links.innerHTML=[...(await(await fetch('links')).text()).matchAll(
+				/(?<src>.*?)#(?<desc>.*?) (?<dst>.*?) (?<code>\d{3})/g
+			)].map(({groups:x})=>(
+				`<div><h3><a href="${x.src}">${x.desc}</a></h3><p>${x.dst}</div></a>`
 			)).join('')
 		))();
 	</script>
