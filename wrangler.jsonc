@@ -5,7 +5,18 @@
 {
 	"$schema":"node_modules/wrangler/config-schema.json",
 	"name":"6ca-me",
-	"compatibility_date":"2025-06-20",
+	"compatibility_date":"2025-07-15",
+	"routes": [
+		{
+			"pattern": "6ca.me",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.6ca.me",
+			"custom_domain": true
+		}
+	],
+
 	// "main":"src/index.mjs",
 	"assets":{
 		"directory":"./public",
