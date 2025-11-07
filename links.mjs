@@ -1,6 +1,6 @@
 export default[
 	{
-		name:'GitHub_Pages',
+		name:'GitHub Pages',
 		src:'/ghp',
 		dst:'https://mcbeeringi.github.io',
 		code:301
