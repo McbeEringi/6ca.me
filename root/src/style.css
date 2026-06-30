@@ -4,8 +4,8 @@
 	--ac:var(--ac0);
 	--bor:max(2px,.2em);
 	--stuff:167px;
-	--iconl:url("https://mcbeeringi.dev/img/icon.svg");
-	--icond:url("https://mcbeeringi.dev/img/icon.svg#!");
+	--iconl:url("https://6ca.me/img/icon.svg");
+	--icond:url("https://6ca.me/img/icon.svg#!");
 	--tf:cubic-bezier(0,0,0,1.5);
 	--bc:var(--w);--fc:var(--k);--iimg:var(--iconl);
 	color:var(--fc);background:0 0/5cm url("../img/cross.svg") var(--bc);
