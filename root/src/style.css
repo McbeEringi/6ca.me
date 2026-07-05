@@ -1,7 +1,7 @@
 :root{
 	--wk:#210;--ww:#eed;
 	--ck:#223;--cw:#def;
-	--s:#aaac;
+	--s:#999c;
 	--ac0:#6ca;--ac1:#6be;--ac2:#baf;--ac3:#e9b;--ac4:#e97;--ac5:#bb6;
 	--ac:var(--ac0);
 	--bor:max(2px,.2em);
@@ -9,16 +9,23 @@
 	--iconl:url("https://6ca.me/img/icon.svg");
 	--icond:url("https://6ca.me/img/icon.svg#!");
 	--tf:cubic-bezier(0,0,0,1.5);
-	--bc:var(--ww);--fc:var(--wk);--iimg:var(--iconl);
+	--bc:var(--ww);--fc:var(--wk);
+	--sbc:var(--cw);--fc:var(--ck);
+	--iimg:var(--iconl);
 	color:var(--fc);background:0 0/5cm url("../img/cross.svg") var(--bc);
 	font-family:sans-serif;accent-color:var(--ac0);
-	text-shadow:0 0 var(--bor) var(--bc),0 0 var(--bor) var(--bc);
+	text-shadow:0 0 var(--bor) var(--bc),0 0 calc(var(--bor)/2) var(--bc);
 	tab-size:2;overflow-wrap:break-word;
 }
 :link,:visited{color:unset;}
-:visited{text-decoration-color:color-mix(currentColor,var(--bc));}
+/* :visited{text-decoration-color:color-mix(currentColor,var(--bc));} */
+:visited{text-decoration-color:var(--s);}
 @media(prefers-color-scheme:dark){
-	:root{--bc:var(--ck);--fc:var(--cw);--iimg:var(--icond);}
+	:root{
+		--bc:var(--ck);--fc:var(--cw);
+		--sbc:var(--wk);--sfc:var(--ww);
+		--iimg:var(--icond);
+	}
 	/* :link{color:#8cf;}:visited{color:#c8f;}:link:active,:visited:active{color:#f8c;} */
 }
 @keyframes s9{0%{transform:scale(.9);}}
@@ -27,7 +34,7 @@ main{max-width:960px;margin:0 auto;}
 hr{border:2px solid var(--s);border-radius:2px;}
 .irp{image-rendering:pixelated;}
 :any-link.nocol{color:var(--fc);}
-.stuff>*,.zab{color:color-mix(var(--fc) 75%,var(--ac) 25%);accent-color:var(--ac);}
+.stuff>*,.zab{color:var(--sfc);}/*color-mix(var(--fc) 75%,var(--ac) 25%);accent-color:var(--ac);}*/
 
 .zab{
 	padding:16px;
