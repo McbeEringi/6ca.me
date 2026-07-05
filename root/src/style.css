@@ -17,9 +17,6 @@
 	text-shadow:0 0 var(--bor) var(--bc),0 0 calc(var(--bor)/2) var(--bc);
 	tab-size:2;overflow-wrap:break-word;
 }
-:link,:visited{color:unset;}
-/* :visited{text-decoration-color:color-mix(currentColor,var(--bc));} */
-:visited{text-decoration-color:var(--s);}
 @media(prefers-color-scheme:dark){
 	:root{
 		--bc:var(--ck);--fc:var(--cw);
@@ -33,7 +30,10 @@
 main{max-width:960px;margin:0 auto;}
 hr{border:2px solid var(--s);border-radius:2px;}
 .irp{image-rendering:pixelated;}
-:any-link.nocol{color:var(--fc);}
+:any-link{color:unset;}
+/* :visited{text-decoration-color:color-mix(currentColor,var(--bc));} */
+:visited{text-decoration-color:var(--s);}
+/* :any-link.nocol{color:unset;} */
 .stuff>*,.zab{color:var(--sfc);}/*color-mix(var(--fc) 75%,var(--ac) 25%);accent-color:var(--ac);}*/
 
 .zab{
