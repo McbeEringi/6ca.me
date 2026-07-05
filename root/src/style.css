@@ -1,5 +1,7 @@
 :root{
-	--k:#223;--w:#ffd;--s:#aaac;
+	--wk:#210;--ww:#eed;
+	--ck:#223;--cw:#def;
+	--s:#aaac;
 	--ac0:#6ca;--ac1:#6be;--ac2:#baf;--ac3:#e9b;--ac4:#e97;--ac5:#bb6;
 	--ac:var(--ac0);
 	--bor:max(2px,.2em);
@@ -7,15 +9,17 @@
 	--iconl:url("https://6ca.me/img/icon.svg");
 	--icond:url("https://6ca.me/img/icon.svg#!");
 	--tf:cubic-bezier(0,0,0,1.5);
-	--bc:var(--w);--fc:var(--k);--iimg:var(--iconl);
+	--bc:var(--ww);--fc:var(--wk);--iimg:var(--iconl);
 	color:var(--fc);background:0 0/5cm url("../img/cross.svg") var(--bc);
-	font-family:sans-serif;
+	font-family:sans-serif;accent-color:var(--ac0);
 	text-shadow:0 0 var(--bor) var(--bc),0 0 var(--bor) var(--bc);
-	tab-size:2;
+	tab-size:2;overflow-wrap:break-word;
 }
+:link,:visited{color:unset;}
+:visited{text-decoration-color:color-mix(currentColor,var(--bc));}
 @media(prefers-color-scheme:dark){
-	:root{--bc:var(--k);--fc:var(--w);--iimg:var(--icond);}
-	:link{color:#8cf;}:visited{color:#c8f;}:link:active,:visited:active{color:#f8c;}
+	:root{--bc:var(--ck);--fc:var(--cw);--iimg:var(--icond);}
+	/* :link{color:#8cf;}:visited{color:#c8f;}:link:active,:visited:active{color:#f8c;} */
 }
 @keyframes s9{0%{transform:scale(.9);}}
 
@@ -23,6 +27,7 @@ main{max-width:960px;margin:0 auto;}
 hr{border:2px solid var(--s);border-radius:2px;}
 .irp{image-rendering:pixelated;}
 :any-link.nocol{color:var(--fc);}
+.stuff>*,.zab{color:color-mix(var(--fc) 75%,var(--ac) 25%);accent-color:var(--ac);}
 
 .zab{
 	padding:16px;
@@ -64,8 +69,9 @@ hr{border:2px solid var(--s);border-radius:2px;}
 		background-color:var(--ac);
 	}
 }
-.stuff>:any-link{color:var(--fc) !important;text-decoration:none;}
+.stuff>:any-link{text-decoration-line:none;}
 .stuff>*>*,.stuff>::before{
+	color:inherit;text-decoration-color:inherit;
 	margin:var(--bor) 0 0;display:block;
 	border-radius:8px;
 	padding:8px;
@@ -83,7 +89,7 @@ hr{border:2px solid var(--s);border-radius:2px;}
 	box-shadow:0 0 0 4px var(--bc) inset;
 	position:relative;
 }
-.stuff>:any-link>:first-child{text-decoration:underline;}
+.stuff>:any-link>:first-child{text-decoration-line:underline;}
 .stuff>*>:first-child::before{
 	content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;
 	background-color:var(--ac);
