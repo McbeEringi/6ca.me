@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>fmsynth</title>
+	<link rel="icon" type="image/png" href="/img/favicon.png">
+
+	<link rel="stylesheet" href="/src/style.css">
+</head><body>
+<canvas id="c"></canvas><br>
+<button id="btn">toggle</button><br>
+<div id="sli"><div>
+<pre id="log"></pre>
+<script>
+(async()=>{
+
+c.width=1024;
+c.height=256;
+
+const
+actx=new AudioContext(),
+fm=(
+	await actx.audioWorklet.addModule('fm.js'),
+	new AudioWorkletNode(actx,'FMSynth')
+),
+params=fm.parameters.entries().reduce((a,[i,x])=>(a[i]=x,a),{}),
+aly=Object.assign(new AnalyserNode(actx),{
+	fftSize:2048,
+	maxDecibels:-20,
+	minDecibels:-100
+}),
+alyb=new Uint8Array(aly.frequencyBinCount),
+
+ctx=c.getContext('2d'),
+dq=[],
+draw=_=>(
+	ctx.clearRect(0,0,c.width,c.height),
+
+	aly.getByteFrequencyData(alyb),
+	ctx.beginPath(),
+	alyb.forEach((x,i,{length:l})=>ctx[i?'lineTo':'moveTo'](c.width*i/l,c.height*(1-x/255))),
+	ctx.strokeStyle='#eed',
+	ctx.stroke(),
+
+	aly.getByteTimeDomainData(alyb),
+	ctx.beginPath(),
+	alyb.forEach((x,i,{length:l})=>ctx[i?'lineTo':'moveTo'](c.width*i/l,c.height*x/255)),
+	ctx.strokeStyle='#def',
+	ctx.stroke(),
+
+	dq.forEach(x=>x?.()),
+
+	requestAnimationFrame(draw)
+);
+draw();
+console.log();
+
+
+fm.connect(actx.destination);
+fm.connect(aly);
+
+btn.onclick=()=>({running:_=>actx.suspend(),suspended:_=>actx.resume()}[actx.state]||(_=>_))();
+
+Object.entries(params).forEach(([i,x])=>sli.append(
+	`${i}: `,
+	((
+		e,
+		f=_=>e.textContent=x.value.toFixed(2)
+	)=>(
+		dq.push(f),
+		f(),
+		e
+	))(document.createElement('code')),
+	document.createElement('br'),
+	(e=>(
+		e.append(Object.assign(document.createElement('input'),{
+			type:'range',
+			step:'any',
+			min:x.minValue,
+			max:Math.min(x.maxValue,5000),
+			value:x.value,
+			oninput:e=>x.setTargetAtTime(e.target.value,actx.currentTime+.05,.5)
+		})),
+		e
+	))(document.createElement('label')),
+	document.createElement('br')
+));
+	//n.setValueAtTime(n.value,0),
+	//n.linearRampToValueAtTime(e.target.value,actx.currentTime+2)
+
+})();
+</script>
+</body></html>
