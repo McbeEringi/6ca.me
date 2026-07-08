@@ -6,11 +6,16 @@
 	<link rel="icon" type="image/png" href="/img/favicon.png">
 
 	<link rel="stylesheet" href="/src/style.css">
+	<style>
+		canvas{width:100%;}
+		button{font-size:large;}
+		input[type=range]{width:min(100%,856px);}
+		.note{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(2,64px);}
+	</style>
 </head><body>
 <canvas id="c"></canvas><br>
-<button id="btn">toggle</button><br>
+<button id="btn">run/pause</button><br>
 <div id="sli"><div>
-<pre id="log"></pre>
 <script>
 (async()=>{
 
@@ -27,7 +32,8 @@ params=fm.parameters.entries().reduce((a,[i,x])=>(a[i]=x,a),{}),
 aly=Object.assign(new AnalyserNode(actx),{
 	fftSize:2048,
 	maxDecibels:-20,
-	minDecibels:-100
+	minDecibels:-100,
+	smoothingTimeConstant:0
 }),
 alyb=new Uint8Array(aly.frequencyBinCount),
 
@@ -53,7 +59,6 @@ draw=_=>(
 	requestAnimationFrame(draw)
 );
 draw();
-console.log();
 
 
 fm.connect(actx.destination);
@@ -62,28 +67,57 @@ fm.connect(aly);
 btn.onclick=()=>({running:_=>actx.suspend(),suspended:_=>actx.resume()}[actx.state]||(_=>_))();
 
 Object.entries(params).forEach(([i,x])=>sli.append(
-	`${i}: `,
-	((
-		e,
-		f=_=>e.textContent=`${x.value.toFixed(2)}`
-	)=>(
-		dq.push(f),
-		f(),
-		e
-	))(document.createElement('code')),
-	document.createElement('br'),
 	(e=>(
-		e.append(Object.assign(document.createElement('input'),{
-			type:'range',
-			step:.5,
-			min:x.minValue,
-			max:Math.min(x.maxValue,5000),
-			value:x.value,
-			oninput:e=>x.setTargetAtTime(e.target.value,actx.currentTime+.05,.5)
-		})),
-		i=='frequency'&&e.append(Object.assign(document.createElement('button'),{})),
+		e.append(
+			`${i}: `,
+			((
+				e,
+				f=_=>(
+					_=`${x.value.toFixed(2)}`,
+					_==e.textContent||(e.textContent=_)
+				)
+			)=>(
+				dq.push(f),
+				f(),
+				e
+			))(document.createElement('code')),
+			document.createElement('br'),
+			Object.assign(document.createElement('input'),{
+				type:'range',
+				step:i=='n'?.5:'any',
+				min:x.minValue,
+				max:Math.min(x.maxValue,5000),
+				value:x.value,
+				oninput:e=>x.setTargetAtTime(e.target.value,actx.currentTime+.05,.05)
+			})
+		),
 		e
 	))(document.createElement('label')),
+	i=='frequency'?(e=>(
+	e.classList.add('note'),
+		e.append(
+			...[...'cCdDefFgGaAb'].map((x,i)=>Object.assign(document.createElement('button'),{
+				textContent:x,
+				onclick:e=>(
+					e=e.target.parentElement.parentElement.querySelector('input[type=range]'),
+					e.value=440*2**(
+						(i-9)/12
+						+Math.floor(Math.log2(e.value/(440*2**(-9/12))))
+					),
+					e.oninput({target:e})
+				)
+			})),
+			...[...'1234567'].map(x=>Object.assign(document.createElement('button'),{
+				textContent:x,
+				onclick:e=>(
+					e=e.target.parentElement.parentElement.querySelector('input[type=range]'),
+					e.value=440*2**(-9/12+(Math.log2(e.value/(440*2**(-9/12)))%1+1)%1+(+x-4)),
+					e.oninput({target:e})
+				)
+			})),
+		),
+		e
+	))(document.createElement('div')):'',
 	document.createElement('br')
 ));
 	//n.setValueAtTime(n.value,0),

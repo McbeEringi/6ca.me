@@ -10,14 +10,14 @@ extends AudioWorkletProcessor{
 				name:'frequency',
 				defaultValue:440,
 				minValue:0,
-				// maxValue:1/0,
+				maxValue:20_000,
 				automationRate:'a-rate',
 			},
 			{
 				name:'n',
 				defaultValue:2,
 				minValue:0,
-				maxValue:10,
+				maxValue:8,
 				automationRate:'a-rate',
 			},
 		];
