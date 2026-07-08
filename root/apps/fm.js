@@ -1,5 +1,9 @@
 class FMSynth
 extends AudioWorkletProcessor{
+	constructor(){
+		super();
+		this.t=[0,0];
+	}
 	static get parameterDescriptors(){
 		return[
 			{
@@ -26,13 +30,12 @@ extends AudioWorkletProcessor{
 		param=(x,i)=>params[x]?.[i]??params[x][0],
 		f=cos;
 
-		o.forEach((_,i,a,t=(i+currentFrame)/sampleRate)=>a[i]=(
-			f(
-				t*param('frequency',i)
-					+f(t*param('frequency',i)*param('n',i))
-			)
-			// +f(t*445)
-		)*.5);
+		o.forEach((_,i,a,t=(i+currentFrame)/sampleRate)=>(
+			this.t=this.t.map((x,j)=>(x+1/sampleRate*param('frequency',i)*(j?param('n',i):1))%1),
+			a[i]=(
+				f(this.t[0]+f(this.t[1]))
+			)*.2)
+		);
 		outs.flat(1/0).slice(1).forEach(x=>x.set(o));
 		return true;
 	}

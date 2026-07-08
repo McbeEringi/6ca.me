@@ -65,7 +65,7 @@ Object.entries(params).forEach(([i,x])=>sli.append(
 	`${i}: `,
 	((
 		e,
-		f=_=>e.textContent=x.value.toFixed(2)
+		f=_=>e.textContent=`${x.value.toFixed(2)}`
 	)=>(
 		dq.push(f),
 		f(),
@@ -75,12 +75,13 @@ Object.entries(params).forEach(([i,x])=>sli.append(
 	(e=>(
 		e.append(Object.assign(document.createElement('input'),{
 			type:'range',
-			step:'any',
+			step:.5,
 			min:x.minValue,
 			max:Math.min(x.maxValue,5000),
 			value:x.value,
 			oninput:e=>x.setTargetAtTime(e.target.value,actx.currentTime+.05,.5)
 		})),
+		i=='frequency'&&e.append(Object.assign(document.createElement('button'),{})),
 		e
 	))(document.createElement('label')),
 	document.createElement('br')
