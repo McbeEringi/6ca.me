@@ -15,7 +15,7 @@
 </head><body>
 <canvas id="c"></canvas><br>
 <button id="btn">run/pause</button><br>
-<div id="sli"><div>
+<div id="sli"></div>
 <script>
 (async()=>{
 
@@ -66,60 +66,62 @@ fm.connect(aly);
 
 btn.onclick=()=>({running:_=>actx.suspend(),suspended:_=>actx.resume()}[actx.state]||(_=>_))();
 
-Object.entries(params).forEach(([i,x])=>sli.append(
-	(e=>(
-		e.append(
-			`${i}: `,
-			((
-				e,
-				f=_=>(
-					_=`${x.value.toFixed(2)}`,
-					_==e.textContent||(e.textContent=_)
-				)
-			)=>(
-				dq.push(f),
-				f(),
-				e
-			))(document.createElement('code')),
-			document.createElement('br'),
-			Object.assign(document.createElement('input'),{
-				type:'range',
-				step:i=='n'?.5:'any',
-				min:x.minValue,
-				max:Math.min(x.maxValue,5000),
-				value:x.value,
-				oninput:e=>x.setTargetAtTime(e.target.value,actx.currentTime+.05,.05)
-			})
-		),
-		e
-	))(document.createElement('label')),
-	i=='frequency'?(e=>(
-	e.classList.add('note'),
-		e.append(
-			...[...'cCdDefFgGaAb'].map((x,i)=>Object.assign(document.createElement('button'),{
-				textContent:x,
-				onclick:e=>(
-					e=e.target.parentElement.parentElement.querySelector('input[type=range]'),
-					e.value=440*2**(
-						(i-9)/12
-						+Math.floor(Math.log2(e.value/(440*2**(-9/12))))
-					),
-					e.oninput({target:e})
-				)
-			})),
-			...[...'1234567'].map(x=>Object.assign(document.createElement('button'),{
-				textContent:x,
-				onclick:e=>(
-					e=e.target.parentElement.parentElement.querySelector('input[type=range]'),
-					e.value=440*2**(-9/12+(Math.log2(e.value/(440*2**(-9/12)))%1+1)%1+(+x-4)),
-					e.oninput({target:e})
-				)
-			})),
-		),
-		e
-	))(document.createElement('div')):'',
-	document.createElement('br')
-));
+Object.entries(params).forEach(([i,x])=>sli.append((e=>(
+	e.append(
+		(e=>(
+			e.append(
+				`${i}: `,
+				((
+					e,
+					f=_=>(
+						_=`${x.value.toFixed(2)}`,
+						_==e.textContent||(e.textContent=_)
+					)
+				)=>(
+					dq.push(f),
+					f(),
+					e
+				))(document.createElement('code')),
+				document.createElement('br'),
+				Object.assign(document.createElement('input'),{
+					type:'range',
+					step:i=='n'?.5:'any',
+					min:x.minValue,
+					max:Math.min(x.maxValue,5000),
+					value:x.value,
+					oninput:e=>x.setTargetAtTime(e.target.value,actx.currentTime+.05,.05)
+				})
+			),
+			e
+		))(document.createElement('label')),
+		i=='frequency'?(e=>(
+		e.classList.add('note'),
+			e.append(
+				...[...'cCdDefFgGaAb'].map((x,i)=>Object.assign(document.createElement('button'),{
+					textContent:x,
+					onclick:e=>(
+						e=e.target.parentElement.parentElement.querySelector('input[type=range]'),
+						e.value=440*2**(
+							(i-9)/12
+							+Math.floor(Math.log2(e.value/(440*2**(-9/12))))
+						),
+						e.oninput({target:e})
+					)
+				})),
+				...[...'1234567'].map(x=>Object.assign(document.createElement('button'),{
+					textContent:x,
+					onclick:e=>(
+						e=e.target.parentElement.parentElement.querySelector('input[type=range]'),
+						e.value=440*2**(-9/12+(Math.log2(e.value/(440*2**(-9/12)))%1+1)%1+(+x-4)),
+						e.oninput({target:e})
+					)
+				})),
+			),
+			e
+		))(document.createElement('div')):''
+	),
+	e
+))(document.createElement('div'))));
 	//n.setValueAtTime(n.value,0),
 	//n.linearRampToValueAtTime(e.target.value,actx.currentTime+2)
 
