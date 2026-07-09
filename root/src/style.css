@@ -12,6 +12,7 @@
 	--bc:var(--ww);--fc:var(--wk);
 	--sbc:var(--cw);--fc:var(--ck);
 	--iimg:var(--iconl);
+	color-scheme:light dark;
 	color:var(--fc);background:0 0/5cm url("../img/cross.svg") var(--bc);
 	font-family:sans-serif;accent-color:var(--ac0);
 	text-shadow:0 0 var(--bor) var(--bc),0 0 calc(var(--bor)/2) var(--bc);
