@@ -1,3 +1,3 @@
 # 6ca.me
-![icon](./root/img/favicon.png)
+![icon](./src/img/favicon.png)
 McbeEringi's Homepage
