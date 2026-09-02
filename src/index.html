@@ -1,11 +1,71 @@
-<script type="application/toml" id="config">
-title="6ca.me"
-desc="McbeEringi HomePage"
-</script>
-<script id="bun">
+<script type="build">
+import cfg from'config_default';
+import tmpl from'html_tmpl';
+
+const links=`
+akitoshi-lab.com, Akitoshi Lab., the技術屋
+cutterknife.net, かったあ/Cutter, 最寄りのデザイン屋
+daidai100.github.io, Daidai's Home, ロボット屋?
+dg7.dev, あづみのメモ帳, 実はなんでも屋
+helkun.dev, へる破壊財団, ソフト兼音楽時々ハード屋
+hnkk.me, はんかくくんのページ, ハートフル屋<br>工事中……
+hutinoatari.dev, 淵野アタリ紐結び研究所, うどん兼最短経路屋
+jun-robot.github.io, Jumpei Saito, インタラクティブメディアロボット屋
+k1h.dev, k1h.dev, ネットワーク屋
+kat0h.com, かとうのHomePage, ｺﾝﾁﾇｴｰｼｮﾝ屋
+laddge.net, Laddgeのページ, フルスタック屋<br>工事中……, https://i.lddg.me/laddge.min.png
+lnln.dev, りんりん, ソリューション屋
+mimifuwa.cc, mimifuwa.cc, Webプロダクト屋
+shigu10.neocities.org, しぐれ煮, ASMR屋
+sites.google.com/view/mcra, 天乃涼介ポータル, マイクラ屋
+tert2.dev, Tert2's workshop, 回路屋
+y-chan.dev, y-chan's website, 音声合成屋
+yuino.dev, ゆいのページ, なんでも屋
+yuubinnkyoku.github.io, 〒«ゆうびんきょく»のホームページ, 勝手に期待している後輩
+`.split('\n').filter(x=>x).map(x=>x.split(/,\s*/));
+
 export default x=>(
-console.log(Bun,x,'hello from html!')
+	x=tmpl({
+		...cfg,
+		title:'6ca.me',
+		desc:'McbeEringi HomePage'
+	})(x),
+	x.html=new HTMLRewriter().on('div#link[class=stuff]',{element:e=>e.append(
+		links.map(x=>`<a target="_blank" href="https://${x[0]}/" style="--img:url(${
+			x[3]??`../img/links/${x[0].replace(/\//g,'_')}.png`
+		})"${x[3]?' class="irp"':''}><p>${x[1]}</p><p>${x[2]}</p></a>\n`).join(''),
+		{html:true}
+	)}).transform(x.html),
+	x
 );
 </script>
-<h1>h1</h1>
-<script>console.log(1)</script>
+<style head>
+	.icon>img{display:block;margin:0 auto;width:min(100%,960px);height:auto;max-height:80vh;object-fit:contain;transform:scale(.8);}
+</style>
+
+<picture class="icon">
+	<source srcset="https://6ca.me/img/icon.svg#!_" media="(prefers-color-scheme:dark)">
+	<img src="https://6ca.me/img/icon.svg#_" width="1" height="1">
+</picture>
+<main role="main">
+<h1>6ca.me</h1>
+<p>
+	エリンギ@McbeEringi の個人サイトです<br>
+	hex color code <span style="color:#6ca;font-weight:bolder;">#66ccaa</span> from icon
+</p>
+<hr>
+<div class="zab">
+	<h2>.app</h2>
+	<div class="stuff">
+		<a href="apps"><p>.app</p></a>
+		<a href="https://l.6ca.me" class="irp" style="--img:url(https://l.6ca.me/img/favicon.png)"><p>l.6ca.me</p><p>リンクポータル</p></a>
+		<a href="frag"><p>.frag</p></a>
+		<a href="https://www.aozora.gr.jp/cards/000081/files/1935_19925.html" style="--img:url(https://www.aozora.gr.jp/images/top_logo.png)"><p>ポラーノの広場</p><p>あのイーハトーヴォのすきとおった風……</p></a>
+	</div>
+</div>
+<div class="zab">
+	<h2>.link</h2>
+	<p>個人サイトを持っている同胞<br>敬称略</p>
+	<div class="stuff" id="link"></div>
+</div>
+</main>

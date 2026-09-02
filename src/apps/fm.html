@@ -1,18 +1,19 @@
-<!DOCTYPE html>
-<html><head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>fmsynth</title>
-	<link rel="icon" type="image/png" href="/img/favicon.png">
+<script type="build">
+import cfg from'config_default';
+import tmpl from'html_tmpl';
 
-	<link rel="stylesheet" href="/src/style.css">
-	<style>
-		canvas{width:100%;}
-		button{font-size:large;}
-		input[type=range]{width:min(100%,856px);}
-		.note{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(2,64px);}
-	</style>
-</head><body>
+export default tmpl({
+	...cfg,
+	title:'fmsynth',
+})
+</script>
+<style head>
+	canvas{width:100%;}
+	button{font-size:large;}
+	input[type=range]{width:min(100%,856px);}
+	.note{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(2,64px);}
+</style>
+
 <canvas id="c"></canvas><br>
 <button id="btn">run/pause</button><br>
 <div id="sli"></div>
@@ -127,4 +128,3 @@ Object.entries(params).forEach(([i,x])=>sli.append((e=>(
 
 })();
 </script>
-</body></html>
