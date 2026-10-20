@@ -10,6 +10,7 @@ export default tmpl({
 <style head>
 #svg{max-width:100%;height:auto;}
 #c{display:none;}
+#log{overflow:auto;}
 </style>
 
 <h1>seal</h1>
@@ -28,6 +29,7 @@ export default tmpl({
 		<input type="file"><button>clear</button> <label>pixelated:<input type="checkbox"></label><br>
 		<input type="file"><button>clear</button> <label>pixelated:<input type="checkbox"></label>
 	</details>
+	<pre id="log"></pre>
 </div>
 <br>
 
@@ -61,6 +63,9 @@ export default tmpl({
 <canvas id="c" width="2100" height="3000"></canvas>
 
 <script>
+onerror=e=>log.textContent+=e;
+onunhandledrejection=e=>log.textContent+=e;
+
 const
 files=document.querySelectorAll('input[type="file"]'),
 cb=document.querySelectorAll('input[type="checkbox"]'),
@@ -96,7 +101,10 @@ dlpng.onclick=async x=>(
 	x=new Image(),
 	x.src=`data:image/svg+xml;base64,${btoa(svg.outerHTML)}`,
 	await x.decode(),
-	c.getContext('2d').drawImage(x,0,0,c.width,c.height),
+	(ctx=>(
+		ctx.clearImage(0,0,c.width,c.height),
+		ctx.drawImage(x,0,0,c.width,c.height)
+	))(c.getContext('2d')),
 	dl(await new Promise((f,r)=>c.toBlob(f,r)))
 );
 </script>
