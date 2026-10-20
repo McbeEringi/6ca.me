@@ -1,0 +1,31 @@
+<script type="build">
+import cfg from'config_default';
+import tmpl from'html_tmpl';
+
+export default async x=>(
+	x=tmpl({
+		...cfg,
+		title:'apps',
+	})(x),
+	x.html=await new HTMLRewriter()
+		.on('div.stuff',{element:async e=>e.append(
+			(await Promise.all([...new Bun.Glob('*.html').scanSync('.')].filter(x=>![
+				'index.html','tmpl.html'
+			].includes(x)).map(async x=>(
+				x=x.slice(0,-'.html'.length),
+				`<a href="${x}"><p>${x}</p></a>`
+			)))).join('')
+		,{html:true})})
+		.transform(x.html),
+	x
+);
+</script>
+<style head>
+</style>
+
+<h1>.app</h1>
+<hr>
+<div class="zab">
+<div class="stuff"></div>
+</div>
+
