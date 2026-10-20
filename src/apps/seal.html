@@ -18,7 +18,8 @@ export default tmpl({
 <hr>
 
 <div class="zab">
-	<button id="dlsvg">DL as SVG</button> <button id="dlpng">DL as PNG</button>
+	<button id="dlsvg">DL as SVG</button><br>
+	<label>dpi:<input type="number" id="dpi"></label><button id="dlpng">DL as PNG</button>
 	<details>
 		<summary>Images</summary>
 		<input type="file"><button>clear</button> <label>pixelated:<input type="checkbox"></label><br>
@@ -101,10 +102,8 @@ dlpng.onclick=async x=>(
 	x=new Image(),
 	x.src=`data:image/svg+xml;base64,${btoa(svg.outerHTML)}`,
 	await x.decode(),
-	(ctx=>(
-		ctx.clearImage(0,0,c.width,c.height),
-		ctx.drawImage(x,0,0,c.width,c.height)
-	))(c.getContext('2d')),
+	c.width=3.5*dpi.value,c.height=5*dpi.value,
+	c.getContext('2d').drawImage(x,0,0,c.width,c.height),
 	dl(await new Promise((f,r)=>c.toBlob(f,r)))
 );
 </script>
