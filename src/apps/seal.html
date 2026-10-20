@@ -31,7 +31,7 @@ export default tmpl({
 </div>
 <br>
 
-<svg xmlns="http://www.w3.org/2000/svg" width="14in" height="20in" viewBox="0 0 35 49" style="background-color:#ccc" id="svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="3.5in" height="5in" viewBox="0 0 35 49" style="background-color:#ccc" id="svg">
 	<desc>5x7 icons</desc>
 	<defs>
 		<clipPath id="clip"><circle cx="3.5" cy="3.5" r="3.5" id="circle" fill="none"/></clipPath>
@@ -58,7 +58,7 @@ export default tmpl({
 	<use href="#col" x="21"/>
 	<use href="#col" x="28"/>
 </svg>
-<canvas id="c"></canvas>
+<canvas id="c" width="2100" height="3000"></canvas>
 
 <script>
 const
@@ -96,8 +96,7 @@ dlpng.onclick=async x=>(
 	x=new Image(),
 	x.src=`data:image/svg+xml;base64,${btoa(svg.outerHTML)}`,
 	await x.decode(),
-	c.width=x.naturalWidth,c.height=x.naturalHeight,
-	c.getContext('2d').drawImage(x,0,0),
+	c.getContext('2d').drawImage(x,0,0,c.width,c.height),
 	dl(await new Promise((f,r)=>c.toBlob(f,r)))
 );
 </script>
