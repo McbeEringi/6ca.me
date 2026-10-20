@@ -63,8 +63,8 @@ export default tmpl({
 <canvas id="c" width="2100" height="3000"></canvas>
 
 <script>
-onerror=e=>log.textContent+=e;
-onunhandledrejection=e=>log.textContent+=e;
+onerror=e=>log.textContent+=e+'\n';
+onunhandledrejection=e=>log.textContent+=e.reason+'\n';
 
 const
 files=document.querySelectorAll('input[type="file"]'),
