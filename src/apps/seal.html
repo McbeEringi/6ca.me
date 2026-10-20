@@ -8,7 +8,8 @@ export default tmpl({
 });
 </script>
 <style head>
-#disp{overflow:auto;}
+#svg{max-width:100%;height:auto;}
+#c{display:none;}
 </style>
 
 <h1>seal</h1>
@@ -16,43 +17,86 @@ export default tmpl({
 <hr>
 
 <div class="zab">
-<input type="file" id="file"><br>
-<button id="dlsvg">DL as SVG</button><br>
-<button id="dlpng">DL as PNG</button>
+	<button id="dlsvg">DL as SVG</button> <button id="dlpng">DL as PNG</button>
+	<details>
+		<summary>Images</summary>
+		<input type="file"><button>clear</button> <label>pixelated:<input type="checkbox"></label><br>
+		<input type="file"><button>clear</button> <label>pixelated:<input type="checkbox"></label><br>
+		<input type="file"><button>clear</button> <label>pixelated:<input type="checkbox"></label><br>
+		<input type="file"><button>clear</button> <label>pixelated:<input type="checkbox"></label><br>
+		<input type="file"><button>clear</button> <label>pixelated:<input type="checkbox"></label><br>
+		<input type="file"><button>clear</button> <label>pixelated:<input type="checkbox"></label><br>
+		<input type="file"><button>clear</button> <label>pixelated:<input type="checkbox"></label>
+	</details>
 </div>
 <br>
 
-<div id="disp">
-
-<svg xmlns="http://www.w3.org/2000/svg" width="14in" height="20in" viewBox="0 0 35 49" style="background-color:#ccc;image-rendering:pixelated;" id="svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="14in" height="20in" viewBox="0 0 35 49" style="background-color:#ccc" id="svg">
 	<desc>5x7 icons</desc>
 	<defs>
 		<clipPath id="clip"><circle cx="3.5" cy="3.5" r="3.5" id="circle" fill="none"/></clipPath>
-		<image width="7" height="7" id="icon" clip-path="url(#clip)"/>
-		<g id="row">
-			<use href="#icon"/>
-			<use href="#icon" x="7"/>
-			<use href="#icon" x="14"/>
-			<use href="#icon" x="21"/>
-			<use href="#icon" x="28"/>
+		<image width="7" height="7" id="icon0" clip-path="url(#clip)"/>
+		<image width="7" height="7" id="icon1" clip-path="url(#clip)"/>
+		<image width="7" height="7" id="icon2" clip-path="url(#clip)"/>
+		<image width="7" height="7" id="icon3" clip-path="url(#clip)"/>
+		<image width="7" height="7" id="icon4" clip-path="url(#clip)"/>
+		<image width="7" height="7" id="icon5" clip-path="url(#clip)"/>
+		<image width="7" height="7" id="icon6" clip-path="url(#clip)"/>
+		<g id="col">
+			<use/>
+			<use y="7"/>
+			<use y="14"/>
+			<use y="21"/>
+			<use y="28"/>
+			<use y="35"/>
+			<use y="42"/>
 		</g>
 	</defs>
-	<use href="#row"/>
-	<use href="#row" y="7"/>
-	<use href="#row" y="14"/>
-	<use href="#row" y="21"/>
-	<use href="#row" y="28"/>
-	<use href="#row" y="35"/>
-	<use href="#row" y="42"/>
+	<use href="#col"/>
+	<use href="#col" x="7"/>
+	<use href="#col" x="14"/>
+	<use href="#col" x="21"/>
+	<use href="#col" x="28"/>
 </svg>
-
 <canvas id="c"></canvas>
 
-<div>
-
-
 <script>
-(file.onchange=async x=>console.log(
-	icon.href.baseVal=await new Promise((f,r)=>Object.assign(new FileReader(),{onload:x=>f(x.target.result),onerror:r}).readAsDataURL(x.target.files[0]))
-))({target:file});
+const
+dl=x=>(a=>URL.revokeObjectURL(a.href=URL.createObjectURL(x),a.download=file.files[0]?.name,a.click()))(document.createElement('a')),
+cb=document.querySelectorAll('input[type="checkbox"]'),
+icon=document.querySelectorAll('image[id^=icon]'),
+row=document.querySelectorAll('#col>use');
+
+
+document.querySelectorAll('input[type="file"]').forEach((e,i)=>(
+	(e.onchange=async(x={target:e})=>(
+		x.target.value?console.log(
+			icon[i].href.baseVal=
+				await new Promise((f,r)=>Object.assign(new FileReader(),{onload:x=>f(x.target.result),onerror:r}).readAsDataURL(x.target.files[0]))
+		):icon[i].removeAttribute('href'),
+		[...icon].reduce((a,x,i)=>(x.href.baseVal&&console.log(a=i),row[i].href.baseVal=`#icon${a}`,a),0)
+	))(),
+	e.nextElementSibling.onclick=_=>(
+		e.value='',e.onchange(),
+		cb[i].checked=false,cb[i].onchange()
+	)
+));
+
+cb.forEach((e,i)=>(
+	(e.onchange=(x={target:e})=>(
+		x.target.checked?icon[i].style.imageRendering='pixelated':icon[i].removeAttribute('style')
+	))()
+));
+
+
+dlsvg.onclick=async x=>dl(new Blob([svg.outerHTML],{type:'image/svg+xml'}));
+
+dlpng.onclick=async x=>(
+	x=new Image(),
+	x.src=`data:image/svg+xml;base64,${btoa(svg.outerHTML)}`,
+	await x.decode(),
+	c.width=x.naturalWidth,c.height=x.naturalHeight,
+	c.getContext('2d').drawImage(x,0,0),
+	dl(await new Promise((f,r)=>c.toBlob(f,r)))
+);
 </script>
