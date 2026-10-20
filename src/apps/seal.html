@@ -81,7 +81,11 @@ files.forEach((e,i)=>(
 			icon[i].href.baseVal=
 				await new Promise((f,r)=>Object.assign(new FileReader(),{onload:x=>f(x.target.result),onerror:r}).readAsDataURL(x.target.files[0]))
 		):icon[i].removeAttribute('href'),
-		[...icon].reduce((a,x,i)=>(x.href.baseVal&&console.log(a=i),row[i].setAttribute('href',`#icon${a}`),a),0)
+		[...icon].reduce((a,x,i)=>(
+			x.href.baseVal&&(a=i),
+			row[i].setAttribute('href',`#icon${a}`),// IOS Safari: row[i].href.baseVal='' turns into xlink:href
+			a
+		),0)
 	))(),
 	e.nextElementSibling.onclick=_=>(
 		e.value='',e.onchange(),
