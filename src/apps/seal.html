@@ -1,0 +1,58 @@
+<script type="build">
+import cfg from'config_default';
+import tmpl from'html_tmpl';
+
+export default tmpl({
+	...cfg,
+	title:'seal',
+});
+</script>
+<style head>
+#disp{overflow:auto;}
+</style>
+
+<h1>seal</h1>
+<p>L判(フチ有り)で印刷してシールになるやつ</p>
+<hr>
+
+<div class="zab">
+<input type="file" id="file"><br>
+<button id="dlsvg">DL as SVG</button><br>
+<button id="dlpng">DL as PNG</button>
+</div>
+<br>
+
+<div id="disp">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="14in" height="20in" viewBox="0 0 35 49" style="background-color:#ccc;image-rendering:pixelated;" id="svg">
+	<desc>5x7 icons</desc>
+	<defs>
+		<clipPath id="clip"><circle cx="3.5" cy="3.5" r="3.5" id="circle" fill="none"/></clipPath>
+		<image width="7" height="7" id="icon" clip-path="url(#clip)"/>
+		<g id="row">
+			<use href="#icon"/>
+			<use href="#icon" x="7"/>
+			<use href="#icon" x="14"/>
+			<use href="#icon" x="21"/>
+			<use href="#icon" x="28"/>
+		</g>
+	</defs>
+	<use href="#row"/>
+	<use href="#row" y="7"/>
+	<use href="#row" y="14"/>
+	<use href="#row" y="21"/>
+	<use href="#row" y="28"/>
+	<use href="#row" y="35"/>
+	<use href="#row" y="42"/>
+</svg>
+
+<canvas id="c"></canvas>
+
+<div>
+
+
+<script>
+(file.onchange=async x=>console.log(
+	icon.href.baseVal=await new Promise((f,r)=>Object.assign(new FileReader(),{onload:x=>f(x.target.result),onerror:r}).readAsDataURL(x.target.files[0]))
+))({target:file});
+</script>
