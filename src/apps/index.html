@@ -9,7 +9,7 @@ export default async x=>(
 	})(x),
 	x.html=await new HTMLRewriter()
 		.on('div.stuff',{element:async e=>e.append(
-			(await Promise.all([...new Bun.Glob('*.html').scanSync('.')].sort().filter(x=>![
+			(await Promise.all([...new Bun.Glob('*.html').scanSync(import.meta.dir)].sort().filter(x=>![
 				'index.html','tmpl.html'
 			].includes(x)).map(async x=>(
 				x=x.slice(0,-'.html'.length),
