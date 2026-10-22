@@ -106,7 +106,7 @@ dlsvg.onclick=async x=>dl(new Blob([svg.outerHTML],{type:'image/svg+xml'}));
 
 dlpng.onclick=async x=>(
 	x=new Image(),
-	log.textContent+=svg.outerHTML,
+	//log.textContent+=svg.outerHTML,
 	x.src=`data:image/svg+xml;base64,${btoa(svg.outerHTML)}`,
 	await x.decode(),
 	(ctx=>(
