@@ -78,8 +78,10 @@ dl=x=>(a=>URL.revokeObjectURL(a.href=URL.createObjectURL(x),a.download=[...files
 files.forEach((e,i)=>(
 	(e.onchange=async(x={target:e})=>(
 		x.target.value?console.log(
-			icon[i].href.baseVal=
+			icon[i].setAttribute(
+				'href',
 				await new Promise((f,r)=>Object.assign(new FileReader(),{onload:x=>f(x.target.result),onerror:r}).readAsDataURL(x.target.files[0]))
+			)
 		):icon[i].removeAttribute('href'),
 		[...icon].reduce((a,x,i)=>(
 			x.href.baseVal&&(a=i),
@@ -104,6 +106,7 @@ dlsvg.onclick=async x=>dl(new Blob([svg.outerHTML],{type:'image/svg+xml'}));
 
 dlpng.onclick=async x=>(
 	x=new Image(),
+	log.textContent+=svg.outerHTML,
 	x.src=`data:image/svg+xml;base64,${btoa(svg.outerHTML)}`,
 	await x.decode(),
 	(ctx=>(
