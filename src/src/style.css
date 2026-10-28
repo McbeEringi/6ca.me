@@ -7,7 +7,6 @@
 	--ac2k:#484;--ac2w:#8c8;
 	--warnk:#c30;--warnw:#f93;
 	--errk:#c00;--errw:#f66;
-	--bor:max(2px,.2em);
 	--stuff:167px;
 	--iconl:url("https://6ca.me/img/icon.svg");
 	--icond:url("https://6ca.me/img/icon.svg#!");
@@ -62,12 +61,16 @@ hr{border:2px solid var(--ns);border-radius:2px;opacity:.5;}
 	gap:16px;
 }
 .stuff>*{
-	box-shadow:0 0 0 var(--bor) var(--bc) inset;
-	padding:8px;
+	border:4px var(--bc) solid;
+	box-sizing:border-box;
+	padding:4px;
 	border-radius:16px;
 	transition:background-color .2s,transform .3s var(--tf);
 	animation:s9 .3s var(--tf);
 	outline:none;
+	display:grid;
+	grid-auto-rows:min-content;
+	gap:4px;
 }
 .stuff>:focus,.stuff>:active{
 	transform:scale(1.05);
@@ -89,29 +92,36 @@ hr{border:2px solid var(--ns);border-radius:2px;opacity:.5;}
 .stuff>:any-link{text-decoration-line:none;}
 .stuff>*>*,.stuff>::before{
 	color:inherit;text-decoration-color:inherit;
-	margin:var(--bor) 0 0;display:block;
+	margin:0;
 	border-radius:8px;
 	padding:8px;
 }
 .stuff>::before{
-	margin:0;
-	content:"";display:block;padding:0;padding-top:calc(100% - calc(4px * 2));
+	content:"";display:block;padding:0;padding-top:calc(100% - 8px);
 	border:4px var(--bc) solid;
-	background:no-repeat center/cover var(--img,var(--iimg));
+	background:no-repeat center/cover var(--img,var(--iimg) var(--bc));
 }
 .stuff>*>:first-child{
 	font-size:larger;
 	font-weight:bold;
 	color:var(--bc);
 	overflow:hidden;
-	box-shadow:0 0 0 4px var(--bc) inset;
+	border:4px var(--bc) solid;
+	padding:4px;
 	position:relative;
 }
-.stuff>:any-link>:first-child{text-decoration-line:underline;}
+/* .stuff>:any-link>:first-child{text-decoration-line:underline;} */
 .stuff>*>:first-child::before{
 	content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;
 	background-color:var(--ac);
 	opacity:.8;
+}
+
+@media(max-width:580px){
+	.stuff{grid-template-columns:auto;gap:8px;}
+	.stuff>*{grid-template-columns:48px 1fr;align-items:center;}
+	.stuff>*>:first-child{grid-column:2;}
+	.stuff>*>*{grid-column:1/-1;font-size:small;}
 }
 
 
