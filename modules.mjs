@@ -2,7 +2,9 @@ const
 config_default={
 	title:'Hello world!',
 	desc:'description goes here...',
-	favicon:'/img/favicon.png',
+	favicon_png:'/img/favicon.png',
+	favicon_svg:'/img/favicon.svg',
+	apple_touch_icon:'/img/apple-touch-icon.png',
 	ogpimg:'/img/icon.png',
 	origin:'https://6ca.me/'
 },
@@ -15,7 +17,9 @@ html_tmpl=c=>x=>((
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>${c.title}</title>
 	<meta name="description" content="${c.desc}">
-	<link rel="icon" type="image/png" href="${c.favicon}">
+	<link rel="icon" type="image/png" href="${c.favicon_png}">
+	<link rel="icon" type="image/svg+xml" href="${c.favicon_svg}">
+	<link rel="apple-touch-icon" href="${c.apple_touch_icon}">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="${c.title}">
 	<meta property="og:description" content="${c.desc}">
