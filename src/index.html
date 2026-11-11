@@ -2,6 +2,7 @@
 import cfg from'config_default';
 import tmpl from'html_tmpl';
 import links_csv from'./links.csv';
+import subdomains from'./subdomains.mjs';
 
 const links=(await links_csv.text()).split('\n').filter(x=>x).map(x=>x.split(/,\s*/));
 
@@ -11,12 +12,18 @@ export default x=>(
 		title:'6ca.me',
 		desc:'McbeEringi HomePage'
 	})(x),
-	x.html=new HTMLRewriter().on('div#link[class=stuff]',{element:e=>e.append(
-		links.map(x=>`<a target="_blank" href="https://${x[0]}/" style="--img:url(${
-			x[3]??`../img/links/${x[0].replace(/\//g,'_')}.png`
-		})"${x[3]?' class="irp"':''}><p>${x[1]}</p><p>${x[2]}</p></a>\n`).join(''),
-		{html:true}
-	)}).transform(x.html),
+	x.html=new HTMLRewriter()
+		.on('div#cont[class=stuff]',{element:e=>e.append(
+			Object.entries(subdomains).map(([i,x])=>`<a target="_blank" href="https://${i}.6ca.me/" style="--img:url(https://${i}.6ca.me/img/favicon.svg)"><p>${i}.</p><p>${x}</p></a>\n`).join(''),
+			{html:true}
+		)})
+		.on('div#link[class=stuff]',{element:e=>e.append(
+			links.map(x=>`<a target="_blank" href="https://${x[0]}/" style="--img:url(${
+				x[3]??`../img/links/${x[0].replace(/\//g,'_')}.png`
+			})"${x[3]?' class="irp"':''}><p>${x[1]}</p><p>${x[2]}</p></a>\n`).join(''),
+			{html:true}
+		)})
+		.transform(x.html),
 	x
 );
 </script>
@@ -36,12 +43,10 @@ export default x=>(
 </p>
 <hr>
 <div class="zab">
-	<h2>.app</h2>
-	<div class="stuff">
-		<a href="apps"><p>.app</p></a>
-		<a href="https://l.6ca.me" style="--img:url(https://l.6ca.me/img/favicon.svg)"><p>l.6ca.me</p><p>リンクポータル</p></a>
-		<a href="frag"><p>.frag</p></a>
-		<a href="https://www.aozora.gr.jp/cards/000081/files/1935_19925.html" style="--img:url(https://www.aozora.gr.jp/images/top_logo.png)"><p>ポラーノの広場</p><p>あのイーハトーヴォのすきとおった風……</p></a>
+	<h2>.content</h2>
+	<div class="stuff" id="cont">
+		<a href="apps"><p>.app</p><p>帯に短し</p></a>
+		<a href="frag"><p>.frag</p><p>記憶の断片</p></a>
 	</div>
 </div>
 <div class="zab">
@@ -49,7 +54,11 @@ export default x=>(
 	<p>個人サイトを持っている同胞<br>敬称略</p>
 	<div class="stuff" id="link"></div>
 </div>
+<div class="zab">
+	<h2>.???</h2>
+	<div class="stuff">
+		<a href="https://www.aozora.gr.jp/cards/000081/files/1935_19925.html" style="--img:url(https://www.aozora.gr.jp/images/top_logo.png)"><p>ポラーノの広場</p><p>あのイーハトーヴォのすきとおった風……</p></a>
+	</div>
+</div>
 </main>
-<script>
-	[...link.children].forEach(x=>x.style.order=Math.random()*65536|0);
-</script>
+<!-- <script>[...link.children].forEach(x=>x.style.order=Math.random()*65536|0);</script> -->
